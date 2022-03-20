@@ -1,15 +1,4 @@
-// refer to NoSQL day 2 for models
-
-// username
-
-// email
-
-// thoughts
-
-// friends
-
-// from NoSQL day3 mini project
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -25,27 +14,36 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      validate: {
-        validator: function(input) {
-          return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(input);
-        },
-        message: "Email not valid",
-      },
+      match: [
+        /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+        "must be in email format",
+      ],
     },
     thoughts: {
       // need to set up thought.js refer to day 3 subdoc activities
+      type: Schema.Types.ObjectId,
+      ref: "Thought",
     },
     friends: {
-        // need friendCount for self reference? per readme
-    }
+      // need friendCount for self reference, subdoc
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     toJSON: {
-      getters: true,
-    },
+        virtuals: true,
+      },
+    id: false,
   }
 );
 
-const User = model('user', userSchema);
+//virtual Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+});
+
+
+const User = model("User", userSchema);
 
 module.exports = User;
