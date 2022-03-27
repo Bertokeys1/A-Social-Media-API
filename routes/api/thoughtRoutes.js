@@ -12,15 +12,12 @@ router.route('/').get(getThoughts).post(createThought);
 
 // /api/thoughts/:ThoughtId
 router
-  .route('/:ThoughtId')
+  .route('/:thoughtId')
   .get(getSingleThought)
   .put(updateThought)
   .delete(deleteThought);
 
-// /api/thoughts/:ThoughtId/tags
-router.route('/:ThoughtId').post(addTag);
-
-// /api/thoughts/:ThoughtId/tags/:tagId
-router.route('/:ThoughtId').delete(removeTag);
+router.route('/:thoughtId/reactions').post();
+router.route('/:thoughtId/reactions/:reactionId').delete();
 
 module.exports = router;

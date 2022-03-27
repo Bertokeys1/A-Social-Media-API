@@ -19,16 +19,16 @@ const userSchema = new Schema(
         "must be in email format",
       ],
     },
-    thoughts: {
+    thoughts: [{
       // need to set up thought.js refer to day 3 subdoc activities
       type: Schema.Types.ObjectId,
       ref: "Thought",
-    },
-    friends: {
+    }],
+    friends: [{
       // need friendCount for self reference, subdoc
       type: Schema.Types.ObjectId,
       ref: "User",
-    },
+    }],
   },
   {
     toJSON: {
