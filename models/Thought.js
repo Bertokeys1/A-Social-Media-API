@@ -1,10 +1,3 @@
-// thoughttext 
-
-// createdAt
-
-// username
-
-// reactions
 const { Schema, model } = require("mongoose");
 const reactionSchema =  require('./Reaction');
 const User = require("./User");
